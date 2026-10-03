@@ -22,8 +22,8 @@ body{
 }
 button{font:inherit}
 .scene{
-  width:100%;min-height:100vh;display:none;position:relative;overflow:hidden;
-  align-items:center;justify-content:center;
+  width:100%;min-height:100vh;display:none;position:relative;overflow-x:hidden;overflow-y:auto;
+  align-items:center;justify-content:center;-webkit-overflow-scrolling:touch;
 }
 .scene.active{display:flex;animation:sceneIn .8s cubic-bezier(.2,.8,.2,1)}
 @keyframes sceneIn{
@@ -385,6 +385,7 @@ button{font:inherit}
   .memory-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:520px){
+  .scene{padding-bottom:88px}
   .title{letter-spacing:-1px}
   .speech{font-size:11px;padding:7px 10px}
   .speech.one{left:-8px}.speech.two{right:-8px}
@@ -670,7 +671,10 @@ function updateDots(num){
 function goScene(num){
   document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
   const target=document.getElementById("scene"+num);
-  if(target) target.classList.add("active");
+  if(target){
+    target.classList.add("active");
+    target.scrollTop=0;
+  }
   currentScene=num;
   updateDots(num);
   window.scrollTo({top:0,behavior:"instant"});
